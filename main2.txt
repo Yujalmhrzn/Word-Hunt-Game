@@ -1,0 +1,107 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php?msg=Please login first.");
+    exit();
+}
+$username = $_SESSION['username'];
+$showWelcome = isset($_GET['welcome']) && $_GET['welcome'] == '1';
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="WordSearch/wordSearch.css" />
+    <link rel="preconnect" href="https://font.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Itim&display=swap"
+      rel="stylesheet"
+    />
+    <title>Word Search</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="WordSearch/WSlogic.js"></script>
+    <script src="WordSearch/WSpath.js"></script>
+    <script src="WordSearch/WScontroller.js"></script>
+    <script src="WordSearch/WSview.js"></script>
+    <script src="WordSearch/WordSearchAILogic.js"></script>
+
+    <style>
+      .welcome-alert {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+        padding: 10px 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        font-family: Arial, sans-serif;
+        z-index: 9999;
+      }
+    </style>
+  </head>
+
+  <body>
+    <?php if ($showWelcome): ?>
+      <div class="welcome-alert" id="welcomeAlert">
+        👋 Welcome, <?php echo htmlspecialchars($username); ?>!
+      </div>
+      <script>
+        // Auto-hide welcome message after 3 seconds
+        setTimeout(() => {
+          const alertBox = document.getElementById('welcomeAlert');
+          if (alertBox) alertBox.style.display = 'none';
+        }, 3000);
+      </script>
+    <?php endif; ?>
+
+    <section id="topScreen">
+      <button id="return" onclick="returnToMain()">Exit</button>
+      <div id="Timer" class="hide">Time Left: 40s</div>
+      <script>
+        function returnToMain() {
+          window.location.href = "index.php";
+        }
+      </script>
+    </section>
+
+    <h1>Word Search</h1>
+    <h2 id="gameInfo">
+      Click-and-Drag to select words! Or press Race the Clock for a Challenge!
+    </h2>
+    <h3 id="themeIntro">The theme is: <span id="wordTheme"></span></h3>
+
+    <section id="gameOptions">
+      <button id="newGameButton" type="button">New Game</button>
+      <!-- <button id="challenge" type="button">Race The Clock</button> -->
+    </section>
+
+    <div class="double" style="display: flex">
+      <div id="wordboard"></div>
+      <div id="wordlist"></div>
+    </div>
+
+    <section id="solve">
+      <button id="solveButton" type="button">
+        Release the sacred answers!
+      </button>
+    </section>
+
+    <script>
+      $(document).ready(function () {
+        new WordSearchController(
+          "#wordboard",
+          "#wordlist",
+          "#solveButton",
+          "#newGameButton",
+          "#wordTheme",
+          "#challenge",
+          "#Timer"
+        );
+      });
+    </script>
+  </body>
+</html>

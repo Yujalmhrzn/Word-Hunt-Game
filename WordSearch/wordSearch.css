@@ -1,0 +1,268 @@
+/* makes all screens the same font */
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Itim", cursive;
+  box-sizing: border-box; /* Add this for consistent box model */
+}
+
+/* display for exit button */
+#return {
+  padding: 8px 15px; /* Slightly more padding */
+  text-align: left;
+  background-color: #bdc3c7; /* Soft gray for return button */
+  color: #34495e; /* Dark text */
+  border: none; /* Remove border for cleaner look */
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: 1%;
+  margin-top: 1%;
+  cursor: pointer; /* Indicate it's clickable */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+}
+#return:hover {
+  background-color: #95a5a6; /* Darker gray on hover */
+  transform: scale(1.05); /* Slightly less dramatic hover for consistency */
+}
+
+h1,
+h3,
+h2,
+#wordTheme,
+#solveButton,
+#newGameButton,
+.listWord,
+#challenge {
+  padding: 5px;
+  text-align: center;
+  color: #34495e; /* Apply main text color to all headings/elements */
+}
+
+/* used to display in the center the New Game button and Race the Clock button*/
+#gameOptions,
+#solve {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Add some space between buttons */
+}
+
+h1,
+h2,
+#wordTheme,
+#solveButton,
+#newGameButton,
+#challenge {
+  border: 2px solid #bdc3c7; /* Use soft border color */
+  border-radius: 8px;
+}
+
+h1,
+h2,
+.cell,
+#wordTheme,
+#wordlist {
+  background-color: #f8f8f8; /* Use secondary background color */
+}
+
+h2 {
+  margin: 10px auto 10px auto;
+  display: table;
+  padding: 8px 15px; /* Add padding for better box appearance */
+}
+
+h1 {
+  font-size: 40px;
+  margin: 10px auto 10px auto;
+  margin-top: -0.5em;
+  display: table;
+  padding: 10px 20px; /* Add padding */
+}
+
+/* allows the hover effect on the buttons*/
+#newGameButton:hover,
+#solveButton:hover,
+#challenge:hover,
+.leaderboard-btn:hover {
+  /* Added leaderboard-btn for consistency */
+  transform: scale(1.05); /* Unified, slightly gentler scale effect */
+}
+
+/* background color of the page*/
+body {
+  background-color: #d8eef3; /* Light blue/teal background */
+  color: #34495e; /* Default text color */
+}
+
+/* border around word search theme box*/
+#wordTheme {
+  border-radius: 8px;
+  padding: 8px 15px; /* Add padding */
+}
+
+/* border around game info box*/
+#gameInfo {
+  border-radius: 10px;
+}
+
+/* display location of word search table*/
+#wordboard {
+  margin: 20px auto 0 auto;
+  border: 2px solid #bdc3c7; /* Soft border color */
+  display: table;
+  min-width: 600px;
+  background-color: #f8f8f8; /* Ensure wordboard background matches */
+}
+
+.boardRow {
+  display: table-row;
+}
+
+/* info on how the table is displayed on screen for word search*/
+.cell {
+  margin: 0 auto;
+  border: none; /* Cells should generally not have individual borders */
+  display: table-cell;
+  height: 30px;
+  width: 30px;
+  font-size: 17px;
+  padding: 0;
+  outline: 0;
+  text-align: center; /* Center text within cells */
+  vertical-align: middle; /* Vertically align text within cells */
+
+  /*ensures text can't be accidentally selected*/
+  cursor: default;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* mouse color on table*/
+.cell:hover {
+  background-color: #bdc3c7; /* Soft gray for hover */
+}
+
+/* mouse color on table to show directions that can be taken for word search*/
+.cell.selectable {
+  background-color: #ecf0f1; /* Lighter gray for selectable */
+}
+
+/* mouse color on table to show the letters user is selecting for word search*/
+.cell.selected {
+  background-color: #a9d9f3; /* Light blue for selected */
+}
+
+/* change in display of found words on board*/
+.cell.found {
+  background-color: #a9d9f3; /* Light blue for user-found words */
+  border: 1px solid #3498db; /* A slightly darker blue border */
+  font-weight: bold;
+}
+
+/* change in display of words given through word search answer reveal*/
+.lost {
+  background-color: #a9d9f3; /* Use same as found for consistency, or pick a new one */
+  border: 1px solid #3498db;
+  font-weight: bold;
+}
+
+/* display of AI found words on word board*/
+.AI {
+  background-color: #ffdab9; /* Light peach for AI words */
+  border: 1px solid #e67e22; /* A complementary orange border */
+  font-weight: bold;
+}
+
+/* word list box display info*/
+#wordlist {
+  margin: 40px auto 0 auto;
+  border: 2px solid #bdc3c7; /* Soft border color */
+  display: table;
+  min-width: 600px;
+  font-size: 17px;
+  text-align: center;
+  background-color: #f8f8f8; /* Ensure wordlist background matches */
+  padding: 10px; /* Add some internal padding */
+  border-radius: 8px; /* Match other elements */
+}
+
+.listRow {
+  display: table-row;
+}
+
+.listWord {
+  display: table-cell;
+  padding: 5px; /* Add padding for better spacing of words */
+}
+
+/* crosses off words as they are found*/
+.listWord.found {
+  color: #88aabf; /* Softer gray-blue for strikethrough */
+  text-decoration: line-through;
+}
+
+/* crosses off words as they are found*/
+.listWord.User {
+  color: #88aabf; /* Keep consistent with 'found' */
+  text-decoration: line-through;
+}
+
+/* crosses off words as they are found*/
+.listWord.crossAI {
+  color: #e6b0aa; /* A slightly softer pink for AI cross-off */
+  text-decoration: line-through;
+}
+
+/* used to space the exit button and timer*/
+#topScreen {
+  display: flex; /* Changed from inline-block for proper flex behavior */
+  justify-content: space-between;
+  align-items: flex-start; /* Align items to the top */
+}
+
+/* timer info for display*/
+#Timer {
+  border: 2px solid #bdc3c7; /* Soft border color */
+  border-radius: 8px;
+  background-color: #f8f8f8; /* Secondary background color */
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 1em;
+  margin-top: 1em;
+  padding: 8px 15px; /* Consistent padding with buttons/headers */
+  text-align: center;
+  color: #34495e; /* Main text color */
+}
+
+/* New Game, Race the Clock, and Reveal Answers button info*/
+#solveButton,
+#newGameButton,
+#challenge {
+  background-color: #4caf50; /* Vibrant green accent */
+  color: white; /* White text for accent buttons */
+  display: inline-block;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-top: 1em;
+  outline: 0;
+  border: none; /* Remove border for cleaner look */
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px; /* More substantial padding for buttons */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+#solveButton:hover,
+#newGameButton:hover,
+#challenge:hover {
+  background-color: #388e3c; /* Darker green on hover */
+}
+
+/* used to hide displays -> keep at bottom*/
+.hide {
+  display: none !important; /* Use !important to ensure it overrides other display properties */
+}

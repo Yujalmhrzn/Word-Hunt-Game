@@ -1,0 +1,393 @@
+<?php
+session_start();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Itim&display=swap"
+      rel="stylesheet"
+    />
+    <title>Word Search Game</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="WordSearch/wordSearchGame.js"></script>
+  </head>
+
+  <body>
+    <div id="start-screen">
+      <main class="Welcome-Background">
+        <section class="creator">
+          <script>
+            function creator() {
+              window.location.href = "Profile.html";
+            }
+          </script>
+        </section>
+
+        <section class="title-start">
+          <h1>Welcome to Word Hunt Game!</h1>
+        </section>
+
+        <section class="game-selection">
+          <p>Click Below To Play</p>
+        </section>
+
+        <section class="play">
+          <button id="wordSearch-play" onclick="wordSearch()">
+            <span class="title">Word Hunt</span>
+          </button>
+          <script>
+            function wordSearch() {
+              // Always redirect to login page
+              window.location.href = "login.php?msg=Please login to play.";
+            }
+          </script>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
+
+
+/* makes all screens the same font */
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Itim", cursive;
+  box-sizing: border-box; /* Essential for consistent sizing */
+}
+
+/* hide background class used to alternate between different game screens */
+.hide-background {
+  display: none;
+}
+
+/* background welcome screen */
+.Welcome-Background {
+  background-color: #d8eef3; /* Light blue/teal background */
+  height: 100vh;
+  padding-top: 1px; /* Small padding to ensure full height */
+  color: #34495e; /* Default text color for this screen */
+}
+
+/* background word search (assuming this is for the main game container) */
+.background-wordSearch {
+  background-color: #d8eef3; /* Consistent with Welcome-Background, or pick a slightly different shade like #C7E0E8 */
+  height: 100vh;
+  padding-top: 1px;
+  color: #34495e; /* Default text color for this screen */
+}
+
+/* welcome screen title */
+.title-start {
+  color: #34495e; /* Dark blue/gray for main titles */
+  text-align: center;
+  font-size: 48px; /* Slightly larger for prominence */
+  margin-top: 2%;
+  /* Subtle text shadow for depth, using the main text color */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  letter-spacing: 1px; /* Add some spacing */
+}
+
+/* creator title */
+.title-creator {
+  color: #34495e; /* Dark blue/gray */
+  text-align: center;
+  font-size: 40px;
+  margin-top: 2%;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* creator image - no color changes, but ensure it's styled well */
+.image {
+  margin-left: 3em;
+  width: 475px;
+  height: 600px;
+  /* Consider adding a subtle border or shadow if it helps integrate */
+  border-radius: 8px; /* Soften corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* creator -> date located under creator image */
+.createdDate {
+  margin-left: 3em;
+  color: #5d6d7e; /* Slightly lighter text for secondary info */
+  font-size: 18px;
+}
+
+/* creator bio */
+.aboutMe {
+  margin-left: 7em;
+  margin-top: 3%;
+  margin-right: 3em;
+  font-size: 22px;
+  line-height: 1.6; /* Improve readability */
+  color: #34495e; /* Main text color */
+}
+
+/* main screen game selection location and size */
+.game-selection {
+  text-align: center;
+  font-size: 22px;
+  color: #34495e; /* Main text color */
+  margin-top: 2em; /* Add some top margin */
+}
+
+/* layout for game selection buttons on start screen */
+#tic-tac-toe-play,
+#wordSearch-play {
+  width: 300px;
+  height: 150px;
+  border: 2px solid #bdc3c7; /* Soft border */
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 12px; /* More rounded corners */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* layout for tic-tac-toe button on start screen */
+#tic-tac-toe-play {
+  background-image: url("assets/TicTacToe_Game.png");
+  background-size: cover;
+  background-position: center; /* Ensure image is centered */
+}
+
+/* layout for wordSearch button on start screen */
+#wordSearch-play {
+  background-image: url("assets/WordSearch_Game.png");
+  background-size: cover;
+  background-position: center; /* Ensure image is centered */
+  margin-right: 1.25em;
+}
+
+/* Centers Main Screen Game Buttons */
+.play {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 1.5em;
+  gap: 20px; /* Space between the game buttons */
+}
+
+/* pseudo-element for blur effect */
+#tic-tac-toe-play::before,
+#wordSearch-play::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit; /* Inherit background image */
+  filter: blur(5px); /* Slightly stronger blur */
+  z-index: 1; /* Behind the title */
+  transition: opacity 0.3s ease;
+  opacity: 0; /* Hidden initially */
+}
+
+/* Show blur effect on hover */
+#tic-tac-toe-play:hover::before,
+#wordSearch-play:hover::before {
+  opacity: 1; /* Show the blur effect */
+}
+
+/* styling for the title that appears on hover */
+#tic-tac-toe-play .title,
+#wordSearch-play .title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white; /* White text for better contrast on blurred image */
+  font-size: 28px; /* Slightly larger title */
+  opacity: 0; /* Initially hides the title */
+  transition: opacity 0.3s ease;
+  z-index: 2; /* Above the blur effect */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Stronger shadow for readability */
+}
+
+/* fades in the title on hover */
+#tic-tac-toe-play:hover .title,
+#wordSearch-play:hover .title {
+  opacity: 1; /* Makes the title visible */
+}
+
+/* enlarges the button when hovering over it */
+#tic-tac-toe-play:hover,
+#wordSearch-play:hover {
+  transform: scale(1.08); /* Slightly less aggressive scale for smoother feel */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More pronounced shadow on hover */
+}
+
+/* grey buttons (creator menu, creator to start) */
+#creator-menu,
+#creator-to-start {
+  background-color: #95a5a6; /* Medium gray for secondary buttons */
+  color: white; /* White text for better contrast */
+  padding: 10px 18px; /* More padding */
+  border-radius: 8px;
+  border: none;
+  font-size: 16px; /* Slightly larger font */
+  margin-left: 1em;
+  margin-top: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+#creator-menu:hover,
+#creator-to-start:hover {
+  background-color: #7f8c8d; /* Darker gray on hover */
+  transform: scale(1.05); /* Consistent hover effect */
+}
+
+.start-TTT,
+.creator-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Align items to the top */
+}
+
+
+
+
+
+
+
+
+// .welcome-alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            font-family: Arial, sans-serif;
+            z-index: 9999;
+            white-space: nowrap;
+            font-size: 1.2em;
+        }
+        #leaderboardPanel {
+            position: fixed;
+            top: 60px; /* Adjust if needed to clear the button */
+            right: 20px;
+            width: 200px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px 15px 10px 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 999;
+            overflow: hidden;
+            display: none; /* Ensure it's hidden by default, as JS will toggle it */
+        }
+
+        #leaderboardList {
+            padding-left: 20px;
+            margin: 0;
+            list-style-type: decimal; /* Use standard numbering for the list */
+        }
+
+        #leaderboardList li {
+            position: relative;
+            margin: 8px 0;
+            padding-left: 5px;
+            display: flex; /* Use flexbox for alignment */
+            justify-content: space-between; /* Space out username and score */
+            align-items: center;
+        }
+
+        .leaderboard-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            padding: 10px 15px;
+            background-color: #007C01;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Add a subtle shadow */
+            transition: background-color 0.3s ease; /* Smooth transition on hover */
+        }
+        .leaderboard-btn:hover {
+            background-color: #005600; /* Darker green on hover */
+        }
+        /* REMOVED: #refreshLeaderboardBtn CSS */
+
+        /* Custom Message Box Styles */
+        #customMessageBox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(75, 85, 99, 0.5); /* Semi-transparent gray overlay */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001; /* Higher than other elements */
+            display: none; /* Hidden by default */
+        }
+        #customMessageBox > div {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            max-width: 24rem;
+            width: 100%;
+            text-align: center;
+        }
+        #messageBoxText {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        #messageBoxCloseBtn {
+            padding: 0.5rem 1.5rem;
+            background-color: #3b82f6;
+            color: #fff;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        #messageBoxCloseBtn:hover {
+            background-color: #2563eb;
+        }
+        /* ===============================
+   AUTO SCALE GRID BY DIFFICULTY
+   =============================== */
+
+:root {
+  --cell-size: 36px; /* default (medium) */
+}
+
+#wordboard {
+  display: grid;
+  gap: 4px;
+  justify-content: center;
+}
+
+#wordboard .cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  font-size: calc(var(--cell-size) * 0.5);
+  line-height: var(--cell-size);
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
